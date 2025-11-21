@@ -356,6 +356,10 @@ application-secrets.yml
 **/credentials.json
 **/auth-config.json
 
+# Application Properties with Sensitive Data
+src/main/resources/application.properties
+application.properties
+
 # Local Configuration
 application-local.properties
 application-local.yml
