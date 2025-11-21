@@ -1,0 +1,56 @@
+﻿# Compiled class files
+*.class
+
+# Log files
+*.log
+
+# Package Files
+*.jar
+*.war
+*.nar
+*.ear
+
+# Maven
+target/
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# IDE
+.idea/
+*.iws
+*.iml
+*.ipr
+.vscode/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# React
+/frontend/build
+/frontend/.env.local
+
+# Environment variables - NEVER COMMIT!
+.env
+.env.local
+.env.development
+.env.production
+
+# Database
+*.db
+*.mv.db
+*.trace.db
+data/
+h2/
+
+# Uploads
+uploads/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test scripts
+test-*.ps1
+test-*.sh
+create-commits.ps1
