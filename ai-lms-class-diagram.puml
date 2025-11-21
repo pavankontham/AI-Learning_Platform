@@ -1,0 +1,492 @@
+@startuml AI-LMS Class Diagram
+
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam classBackgroundColor #F8F9FA
+skinparam classBorderColor #333333
+skinparam arrowColor #2C3E50
+skinparam packageBackgroundColor #E8F4FD
+skinparam packageBorderColor #1976D2
+
+title AI-Powered Learning Management System - Class Diagram
+
+' ===== CONTROLLER LAYER =====
+package "Controller Layer" #E3F2FD {
+    class AuthController {
+        - authService: AuthService
+        + login(LoginRequest): ResponseEntity
+        + register(RegisterRequest): ResponseEntity
+        + validateToken(String): ResponseEntity
+    }
+    
+    class CourseController {
+        - courseService: CourseService
+        - geminiService: GeminiService
+        - quizService: QuizService
+        + getPublishedCourses(): ResponseEntity<List<Course>>
+        + getCourse(String): ResponseEntity<Course>
+        + createCourse(Course): ResponseEntity<Course>
+        + updateCourse(String, Course): ResponseEntity<Course>
+        + deleteCourse(String): ResponseEntity
+        + enrollStudent(String, String): ResponseEntity
+    }
+    
+    class StudentController {
+        - courseService: CourseService
+        - progressService: ProgressService
+        - geminiService: GeminiService
+        - quizService: QuizService
+        - userService: UserService
+        - submissionService: SubmissionService
+        + getDashboard(): ResponseEntity
+        + getCourses(): ResponseEntity<List<Course>>
+        + enrollInCourse(String): ResponseEntity
+        + getProgress(String): ResponseEntity<Progress>
+        + updateProgress(String, String): ResponseEntity
+        + submitAssignment(Long, String): ResponseEntity
+    }
+    
+    class InstructorController {
+        - courseService: CourseService
+        - userService: UserService
+        + getDashboard(): ResponseEntity
+        + getCourses(): ResponseEntity<List<Course>>
+        + getStudentProgress(String): ResponseEntity
+        + getCourseAnalytics(String): ResponseEntity
+    }
+    
+    class AssignmentController {
+        - assignmentService: AssignmentService
+        - courseService: CourseService
+        - submissionService: SubmissionService
+        + getAssignments(String): ResponseEntity<List<Assignment>>
+        + createAssignment(Assignment): ResponseEntity<Assignment>
+        + updateAssignment(Long, Assignment): ResponseEntity<Assignment>
+        + deleteAssignment(Long): ResponseEntity
+        + submitSolution(Long, String): ResponseEntity
+    }
+    
+    class QuizController {
+        - courseService: CourseService
+        - geminiService: GeminiService
+        + generateQuiz(String): ResponseEntity<Quiz>
+        + submitQuiz(String, Map): ResponseEntity
+    }
+    
+    class IQTestController {
+        - geminiService: GeminiService
+        - userService: UserService
+        + generateIQTest(): ResponseEntity<Quiz>
+        + submitIQTest(Map): ResponseEntity
+    }
+}
+
+' ===== SERVICE LAYER =====
+package "Service Layer" #FFF8E1 {
+    class AuthService {
+        - userService: UserService
+        - jwtUtil: JwtUtil
+        + login(String, String): Map<String, Object>
+        + register(User): Map<String, Object>
+        + validateToken(String): boolean
+        - sanitizeUser(User): Map<String, Object>
+    }
+    
+    class CourseService {
+        - courseRepository: CourseRepository
+        - userService: UserService
+        + createCourse(Course, String): Course
+        + findById(String): Optional<Course>
+        + findPublishedCourses(): List<Course>
+        + findByInstructorId(String): List<Course>
+        + updateCourse(Course): Course
+        + deleteCourse(String, String): void
+        + enrollStudent(String, String): void
+        + searchCourses(String): List<Course>
+        + addLesson(String, Lesson): Course
+        + updateLesson(String, String, Lesson): Course
+        + publishCourse(String): Course
+    }
+    
+    class UserService {
+        - userRepository: UserRepository
+        - passwordEncoder: PasswordEncoder
+        + createUser(User): User
+        + findById(Long): Optional<User>
+        + findByUsername(String): Optional<User>
+        + findByEmail(String): Optional<User>
+        + updateUser(User): User
+        + validatePassword(String, String): boolean
+        + updateLastLogin(Long): void
+        + enrollInCourse(Long, String): void
+        + addCreatedCourse(Long, String): void
+        + getInstructors(): List<User>
+        + getStudents(): List<User>
+    }
+    
+    class GeminiService <<AI Core>> {
+        - webClient: WebClient
+        - apiKey: String
+        - apiUrl: String
+        + generateCourseContent(String, String): Course
+        + generateQuiz(String, String, int): Quiz
+        + generateIQTest(): Quiz
+        + generateCodingAssignment(String, String, Difficulty, String): Assignment
+        + generateLessonContent(String, String): String
+        + generateLessonNotes(String, String): String
+        - callGeminiAPI(String): String
+        - parseQuizResponse(String, String): Quiz
+        - parseCodingAssignmentResponse(String, String, Difficulty, String): Assignment
+    }
+    
+    class AssignmentService {
+        - assignmentRepository: AssignmentRepository
+        - geminiService: GeminiService
+        - codeforcesService: CodeforcesService
+        + findByCourseId(String): List<Assignment>
+        + findByInstructorId(String): List<Assignment>
+        + createAssignment(Assignment): Assignment
+        + updateAssignment(Assignment): Assignment
+        + deleteAssignment(Long): void
+        + generateAIAssignment(String, String, Difficulty): Assignment
+        + importCodeforcesAssignment(String, String): Assignment
+    }
+    
+    class ProgressService {
+        - progressRepository: ProgressRepository
+        + getOrCreateProgress(String, String): Progress
+        + updateLessonProgress(String, String, String, boolean, int): Progress
+        + updateVideoProgress(String, String, String, int): Progress
+        + recordQuizAttempt(String, String, String, Map, int, int, boolean, int): Progress
+        + getStudentProgress(String): List<Progress>
+        + getCourseProgress(String): List<Progress>
+        - updateCompletionPercentage(Progress): void
+    }
+    
+    class SubmissionService {
+        - submissionRepository: AssignmentSubmissionRepository
+        - assignmentService: AssignmentService
+        + submitAssignment(Long, String, String, int, List): AssignmentSubmission
+        + getSubmissions(String): List<AssignmentSubmission>
+        + getSubmissionsByAssignment(Long): List<AssignmentSubmission>
+        + getBestSubmission(String, Long): Optional<AssignmentSubmission>
+        - calculateScore(List, int): int
+        - generateFeedback(List, boolean, int, int): String
+    }
+    
+    class CodeforcesService {
+        - webClient: WebClient
+        - apiKey: String
+        - secret: String
+        + getProblems(String, List, int): List<Map>
+        + getProblemsByDifficulty(String, String, int): List<Map>
+        + getUserInfo(String): Map<String, Object>
+        + getContestList(): List<Map>
+        - buildApiCall(String, Map): String
+        - generateSignature(Map): String
+    }
+    
+    class QuizService {
+        + createQuiz(Quiz): Quiz
+        + getQuiz(String): Optional<Quiz>
+        + submitQuizAnswers(String, Map): Map<String, Object>
+        + calculateScore(Quiz, Map): int
+    }
+}
+
+' ===== MODEL LAYER =====
+package "Model Layer (JPA Entities)" #E8F5E9 {
+    class User {
+        - id: Long
+        - username: String
+        - email: String
+        - password: String
+        - firstName: String
+        - lastName: String
+        - role: Role
+        - createdAt: LocalDateTime
+        - lastLoginAt: LocalDateTime
+        - active: boolean
+        - enrolledCourses: List<String>
+        - estimatedIQ: Integer
+        - createdCourses: List<String>
+        - bio: String
+        - expertise: String
+        + getFullName(): String
+    }
+    
+    enum Role {
+        ADMIN
+        INSTRUCTOR
+        STUDENT
+    }
+    
+    class Course {
+        - id: Long
+        - title: String
+        - description: String
+        - instructorId: String
+        - instructorName: String
+        - category: String
+        - difficulty: String
+        - estimatedHours: int
+        - createdAt: LocalDateTime
+        - updatedAt: LocalDateTime
+        - published: boolean
+        - lessons: List<Lesson>
+        - materials: List<String>
+        - videoUrl: String
+        - outline: String
+        - summary: String
+        - enrolledStudents: List<String>
+        - totalEnrollments: int
+        - averageRating: double
+        - reviews: List<Review>
+    }
+    
+    class Lesson {
+        - id: String
+        - title: String
+        - content: String
+        - notes: String
+        - videoUrl: String
+        - videoTitle: String
+        - videoDescription: String
+        - videoEmbedded: boolean
+        - order: int
+        - durationMinutes: int
+        - type: LessonType
+        - createdAt: LocalDateTime
+        - updatedAt: LocalDateTime
+    }
+    
+    enum LessonType {
+        CONTENT
+        VIDEO
+        ASSIGNMENT
+        QUIZ
+    }
+    
+    class Assignment {
+        - id: Long
+        - courseId: String
+        - instructorId: String
+        - title: String
+        - description: String
+        - type: AssignmentType
+        - difficulty: Difficulty
+        - examples: List<Example>
+        - testCases: List<TestCase>
+        - starterCode: String
+        - solution: String
+        - programmingLanguage: String
+        - timeLimit: int
+        - maxAttempts: int
+        - points: int
+        - createdAt: LocalDateTime
+        - dueDate: LocalDateTime
+        - published: boolean
+        - aiGenerated: boolean
+    }
+    
+    enum AssignmentType {
+        AI_GENERATED
+        CODEFORCES
+        MANUAL
+    }
+    
+    enum Difficulty {
+        EASY
+        MEDIUM
+        HARD
+    }
+    
+    class Progress {
+        - id: Long
+        - studentId: String
+        - courseId: String
+        - completionPercentage: int
+        - enrolledAt: LocalDateTime
+        - lastAccessedAt: LocalDateTime
+        - completedAt: LocalDateTime
+        - completed: boolean
+        - lessonProgress: Map<String, LessonProgress>
+        - quizAttempts: List<QuizAttempt>
+        - totalTimeSpentMinutes: int
+        - averageQuizScore: double
+        - totalQuizAttempts: int
+    }
+    
+    class AssignmentSubmission {
+        - id: Long
+        - assignmentId: Long
+        - studentId: String
+        - code: String
+        - submittedAt: LocalDateTime
+        - score: int
+        - maxScore: int
+        - passed: boolean
+        - attemptNumber: int
+        - timeSpentSeconds: int
+        - testResults: List<TestResult>
+        - feedback: String
+    }
+    
+    class Quiz {
+        - id: String
+        - title: String
+        - description: String
+        - questions: List<Question>
+        - timeLimit: int
+        - passingScore: int
+        - createdAt: LocalDateTime
+    }
+}
+
+' ===== REPOSITORY LAYER =====
+package "Repository Layer (Data Access)" #FCE4EC {
+    interface UserRepository {
+        + findByUsername(String): Optional<User>
+        + findByEmail(String): Optional<User>
+        + existsByUsername(String): boolean
+        + existsByEmail(String): boolean
+        + findByRole(Role): List<User>
+        + findByActiveTrue(): List<User>
+        + countByRole(Role): long
+    }
+    
+    interface CourseRepository {
+        + findByPublishedTrue(): List<Course>
+        + findByInstructorId(String): List<Course>
+        + findByCategory(String): List<Course>
+        + findByDifficulty(String): List<Course>
+        + findByTitleContaining(String): List<Course>
+        + countByPublishedTrue(): long
+        + countByInstructorId(String): long
+    }
+    
+    interface AssignmentRepository {
+        + findByCourseIdAndPublishedTrue(String): List<Assignment>
+        + findByCourseId(String): List<Assignment>
+        + findByInstructorId(String): List<Assignment>
+        + findByType(AssignmentType): List<Assignment>
+        + findByDifficulty(Difficulty): List<Assignment>
+        + findByCourseIdAndType(String, AssignmentType): List<Assignment>
+        + countByCourseId(String): long
+    }
+    
+    interface ProgressRepository {
+        + findByStudentIdAndCourseId(String, String): Optional<Progress>
+        + findByStudentId(String): List<Progress>
+        + findByCourseId(String): List<Progress>
+        + findByCompleted(boolean): List<Progress>
+        + findCompletedCoursesByStudent(String): List<Progress>
+        + findCompletedStudentsByCourse(String): List<Progress>
+    }
+    
+    interface AssignmentSubmissionRepository {
+        + findByStudentIdAndAssignmentId(String, Long): List<AssignmentSubmission>
+        + findByStudentId(String): List<AssignmentSubmission>
+        + findByAssignmentId(Long): List<AssignmentSubmission>
+        + findTopByStudentIdAndAssignmentIdOrderByScoreDesc(String, Long): Optional<AssignmentSubmission>
+        + countByStudentIdAndAssignmentId(String, Long): int
+        + getAverageScoreByAssignment(Long): Double
+        + getAverageScoreByStudent(String): Double
+    }
+}
+
+' ===== SECURITY LAYER =====
+package "Security Layer" #F3E5F5 {
+    class JwtUtil {
+        - secretKey: String
+        - jwtExpiration: long
+        + generateToken(String, String, Long): String
+        + extractUsername(String): String
+        + extractRole(String): String
+        + extractUserId(String): Long
+        + validateToken(String, String): boolean
+        + isTokenExpired(String): boolean
+    }
+    
+    class SecurityConfig {
+        + passwordEncoder(): PasswordEncoder
+        + authenticationManager(): AuthenticationManager
+        + filterChain(HttpSecurity): SecurityFilterChain
+    }
+    
+    class JwtAuthenticationFilter {
+        - jwtUtil: JwtUtil
+        - userService: UserService
+        + doFilterInternal(): void
+    }
+}
+
+' ===== RELATIONSHIPS =====
+
+' Controller to Service relationships
+AuthController --> AuthService
+CourseController --> CourseService
+CourseController --> GeminiService
+CourseController --> QuizService
+StudentController --> CourseService
+StudentController --> ProgressService
+StudentController --> GeminiService
+StudentController --> QuizService
+StudentController --> UserService
+StudentController --> SubmissionService
+InstructorController --> CourseService
+InstructorController --> UserService
+AssignmentController --> AssignmentService
+AssignmentController --> CourseService
+AssignmentController --> SubmissionService
+QuizController --> CourseService
+QuizController --> GeminiService
+IQTestController --> GeminiService
+IQTestController --> UserService
+
+' Service to Repository relationships
+AuthService --> UserService
+CourseService --> CourseRepository
+CourseService --> UserService
+UserService --> UserRepository
+AssignmentService --> AssignmentRepository
+AssignmentService --> GeminiService
+AssignmentService --> CodeforcesService
+ProgressService --> ProgressRepository
+SubmissionService --> AssignmentSubmissionRepository
+SubmissionService --> AssignmentService
+
+' Service to Security relationships
+AuthService --> JwtUtil
+UserService --> SecurityConfig
+
+' Entity relationships
+User ||--o{ Course : "creates"
+User ||--o{ Progress : "has"
+User ||--o{ AssignmentSubmission : "submits"
+Course ||--o{ Lesson : "contains"
+Course ||--o{ Assignment : "has"
+Course ||--o{ Progress : "tracks"
+Assignment ||--o{ AssignmentSubmission : "receives"
+Course ||--o{ Quiz : "includes"
+
+' Enums
+User --> Role
+Assignment --> AssignmentType
+Assignment --> Difficulty
+Lesson --> LessonType
+
+' Repository inheritance
+UserRepository --|> JpaRepository
+CourseRepository --|> JpaRepository
+AssignmentRepository --|> JpaRepository
+ProgressRepository --|> JpaRepository
+AssignmentSubmissionRepository --|> JpaRepository
+
+note top of GeminiService : AI Core Service\nGenerates course content,\nassignments, and quizzes\nautomatically
+
+note top of CodeforcesService : External API Integration\nFetches real programming\nproblems from Codeforces
+
+note bottom of JwtUtil : JWT Security\nHandles token generation\nand validation
+
+@enduml
