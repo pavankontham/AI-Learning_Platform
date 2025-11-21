@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Learning Platform - Project Poster</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="poster-container">
+        <!-- Header Section -->
+        <div class="header-section">
+            <div class="title-row">
+                <div class="project-info">
+                    <div class="project-title">
+                        <span class="project-label">Project Title:</span> AI-Powered Learning Management System
+                    </div>
+                    <div class="team-info">
+                        <span class="team-label">Team:</span>
+                        <span class="team-names">Venkata Charan, Pavan, Jayanth</span>
+                    </div>
+                </div>
+                <div class="mentor-info">
+                    <span class="mentor-label">Mentor:</span> <span class="mentor-name">Swaminathan J</span>
+                </div>
+            </div>
+
+            <div class="content-sections">
+                <div class="abstract-section">
+                    <span class="section-title">Abstract:</span>
+                    <span class="abstract-text">
+                        A comprehensive Learning Management System that revolutionizes education through AI automation.
+                        Instructors can create complete courses with one click - AI automatically generates lesson content,
+                        programming assignments from Codeforces, video recommendations, and adaptive assessments with real-time progress tracking.
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Architecture Diagram -->
+        <div class="architecture-section">
+            <div class="architecture-diagram">
+                <!-- View Layer -->
+                <div class="layer-container">
+                    <div class="layer-section view-layer">
+                        <div class="layer-title">View Layer</div>
+                        <div class="component-grid">
+                            <div class="component-box">
+                                <div class="component-title">Student Dashboard</div>
+                            </div>
+                            <div class="component-box">
+                                <div class="component-title">Course Catalog</div>
+                            </div>
+                            <div class="component-box">
+                                <div class="component-title">Lesson Viewer</div>
+                            </div>
+                            <div class="component-box">
+                                <div class="component-title">Assignment Page</div>
+                            </div>
+                            <div class="component-box">
+                                <div class="component-title">Instructor Panel</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HTTP Communication -->
+                <div class="communication-layer">
+                    <div class="http-label">HTTP requests</div>
+                    <div class="http-label">HTTP responses</div>
+                </div>
+
+                <!-- Controller Layer -->
+                <div class="layer-container">
+                    <div class="layer-section controller-layer">
+                        <div class="layer-title">Controller Layer</div>
+                        <div class="api-endpoints">
+                            <div class="endpoint">/api/auth/*</div>
+                            <div class="endpoint">/api/courses/*</div>
+                            <div class="endpoint">/api/lessons/*</div>
+                            <div class="endpoint">/api/assignments/*</div>
+                        </div>
+                        <div class="controller-grid">
+                            <div class="controller-box">
+                                <div class="controller-title">AuthController</div>
+                                <div class="method">login()</div>
+                                <div class="method">register()</div>
+                            </div>
+                            <div class="controller-box">
+                                <div class="controller-title">CourseController</div>
+                                <div class="method">getCourses()</div>
+                                <div class="method">createCourse()</div>
+                            </div>
+                            <div class="controller-box">
+                                <div class="controller-title">LessonController</div>
+                                <div class="method">getLessons()</div>
+                                <div class="method">updateProgress()</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Layer -->
+                <div class="layer-container">
+                    <div class="layer-section service-layer">
+                        <div class="layer-title">Service Layer</div>
+                        <div class="service-grid">
+                            <div class="service-box">
+                                <div class="service-title">AuthService</div>
+                                <div class="service-method">• authenticate()</div>
+                                <div class="service-method">• generateToken()</div>
+                                <div class="service-method">• validateUser()</div>
+                            </div>
+                            <div class="service-box">
+                                <div class="service-title">CourseService</div>
+                                <div class="service-method">• createCourse()</div>
+                                <div class="service-method">• enrollStudent()</div>
+                                <div class="service-method">• trackProgress()</div>
+                            </div>
+                            <div class="service-box highlight-service">
+                                <div class="service-title">AIService</div>
+                                <div class="service-method">• generateContent()</div>
+                                <div class="service-method">• createAssignment()</div>
+                                <div class="service-method">• analyzeProgress()</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Model Entities -->
+                <div class="layer-container">
+                    <div class="layer-section">
+                        <div class="data-section">
+                            <div class="model-entities">
+                                <div class="layer-title">Model Entities</div>
+                                <div class="entity-grid">
+                                    <div class="entity-box">
+                                        <div class="entity-title">User</div>
+                                        <div class="entity-field">• id</div>
+                                        <div class="entity-field">• username</div>
+                                        <div class="entity-field">• email</div>
+                                        <div class="entity-field">• role</div>
+                                    </div>
+                                    <div class="entity-box">
+                                        <div class="entity-title">Course</div>
+                                        <div class="entity-field">• id</div>
+                                        <div class="entity-field">• title</div>
+                                        <div class="entity-field">• description</div>
+                                        <div class="entity-field">• lessons</div>
+                                    </div>
+                                    <div class="entity-box">
+                                        <div class="entity-title">Assignment</div>
+                                        <div class="entity-field">• id</div>
+                                        <div class="entity-field">• title</div>
+                                        <div class="entity-field">• type</div>
+                                        <div class="entity-field">• difficulty</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Database Layer -->
+                <div class="layer-container">
+                    <div class="layer-section">
+                        <div class="database-section">
+                            <div class="layer-title">Database Layer</div>
+                            <div class="database-icon">
+                                <div class="db-symbol">🗄️</div>
+                                <div class="db-title">H2 Database</div>
+                            </div>
+                            <div class="crud-operations">
+                                <div class="crud-item">JPA CRUD OPS</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- External APIs Section -->
+            <div class="external-apis-section">
+                <div class="external-apis">
+                    <div class="api-box">
+                        <div class="api-icon">🤖</div>
+                        <div class="api-title">Gemini AI</div>
+                        <div class="api-desc">Course Generation</div>
+                    </div>
+                    <div class="api-box">
+                        <div class="api-icon">💻</div>
+                        <div class="api-title">Codeforces</div>
+                        <div class="api-desc">Programming Problems</div>
+                    </div>
+                    <div class="api-box">
+                        <div class="api-icon">📹</div>
+                        <div class="api-title">YouTube</div>
+                        <div class="api-desc">Video Content</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technology Labels -->
+            <div class="tech-labels">
+                <div class="tech-label">
+                    <span>React</span>
+                </div>
+                <div class="tech-label">
+                    <span>Spring Boot</span>
+                </div>
+                <div class="tech-label">
+                    <span>Java</span>
+                </div>
+                <div class="tech-label">
+                    <span>H2 Database</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer-section">
+            <div class="footer-content">
+                <div class="submission-info">Java Full-Stack Development Project</div>
+                <div class="university-info">Academic Year 2024-25</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

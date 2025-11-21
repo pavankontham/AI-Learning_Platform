@@ -1,0 +1,576 @@
+/* Base Reset and Typography */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background: #f0f0f0;
+  padding: 20px;
+  line-height: 1.4;
+}
+
+/* Poster Container */
+.poster-container {
+  width: 1200px;
+  height: 800px;
+  margin: auto;
+  background: #ffffff;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  border: 2px solid #000;
+}
+
+/* Header Section */
+.header-section {
+  margin-bottom: 20px;
+  background: #ffffff;
+  padding: 15px 0;
+  border-bottom: 2px solid #000;
+}
+
+.title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.project-info {
+  flex: 1;
+}
+
+.project-title {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.project-label {
+  font-weight: bold;
+  color: #d32f2f;
+}
+
+.team-info {
+  font-size: 14px;
+}
+
+.team-label {
+  font-weight: bold;
+  color: #d32f2f;
+}
+
+.team-names {
+  color: #000;
+}
+
+.mentor-info {
+  font-size: 14px;
+  text-align: right;
+}
+
+.mentor-label {
+  font-weight: bold;
+  color: #d32f2f;
+}
+
+.mentor-name {
+  color: #000;
+}
+
+.content-sections {
+  display: block;
+}
+
+.abstract-section {
+  margin-bottom: 10px;
+}
+
+.section-title {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #d32f2f;
+}
+
+.abstract-text {
+  font-size: 12px;
+  line-height: 1.4;
+  color: #000;
+  text-align: justify;
+}
+
+.novelty-section {
+  margin-bottom: 10px;
+}
+
+.innovation-highlight {
+  background: #ffffff;
+}
+
+.innovation-main {
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #000;
+}
+
+.innovation-details {
+  display: block;
+}
+
+.innovation-item {
+  font-size: 11px;
+  color: #000;
+  margin-bottom: 2px;
+}
+
+/* Architecture Section */
+.architecture-section {
+  margin-bottom: 20px;
+}
+
+.architecture-title {
+  display: none;
+}
+
+.architecture-diagram {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: #ffffff;
+  padding: 20px;
+  border: 2px solid #000;
+  position: relative;
+  height: 400px;
+}
+
+/* Layer Containers */
+.layer-container {
+  flex: 1;
+  margin: 0 10px;
+}
+
+.layer-section {
+  background: #ffffff;
+  border: 2px solid #000;
+  padding: 15px;
+  height: 100%;
+  position: relative;
+}
+
+.layer-title {
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #000;
+  background: #ffffff;
+  padding: 5px;
+  border-bottom: 1px solid #000;
+}
+
+/* Frontend Layer */
+.view-layer {
+  background: #e8d5ff;
+}
+
+.component-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.component-box {
+  background: #d1c4e9;
+  padding: 8px;
+  border: 1px solid #9c27b0;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.component-title {
+  font-size: 11px;
+  font-weight: bold;
+  color: #000;
+}
+
+.component-desc {
+  display: none;
+}
+
+/* Communication Layer */
+.communication-layer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #f0f0f0;
+  border: 2px solid #000;
+  border-radius: 50px;
+  padding: 20px;
+  text-align: center;
+  z-index: 10;
+}
+
+.arrow-down {
+  display: none;
+}
+
+.http-label {
+  font-size: 12px;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 5px;
+}
+
+.service-label, .data-label, .database-label {
+  display: none;
+}
+
+/* Controller Layer */
+.controller-layer {
+  background: #e3f2fd;
+}
+
+.api-endpoints {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.endpoint {
+  font-size: 9px;
+  background: #bbdefb;
+  color: #1565c0;
+  padding: 3px 6px;
+  border: 1px solid #2196f3;
+  border-radius: 3px;
+  font-family: 'Courier New', monospace;
+  margin: 2px;
+}
+
+.controller-grid {
+  display: flex;
+  justify-content: space-around;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.controller-box {
+  background: #90caf9;
+  padding: 8px;
+  border: 1px solid #1976d2;
+  border-radius: 4px;
+  text-align: center;
+  flex: 1;
+  min-width: 120px;
+}
+
+.controller-title {
+  font-size: 11px;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 4px;
+}
+
+.method {
+  font-size: 9px;
+  color: #0d47a1;
+  margin: 2px 0;
+}
+
+/* Service Layer */
+.service-layer {
+  background: #fff8e1;
+}
+
+.service-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.service-box {
+  background: #ffcc80;
+  padding: 8px;
+  border: 1px solid #ffa000;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.highlight-service {
+  background: #ffb74d;
+  border: 2px solid #ff8f00;
+}
+
+.service-title {
+  font-size: 11px;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 4px;
+}
+
+.service-method {
+  font-size: 9px;
+  color: #e65100;
+  line-height: 1.2;
+}
+
+.ai-badge {
+  display: none;
+}
+
+/* Data Layer */
+.data-section {
+  background: #e8f5e9;
+  padding: 15px;
+}
+
+.model-entities .layer-title {
+  color: #000;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.entity-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.entity-box {
+  background: #c8e6c9;
+  padding: 8px;
+  border: 1px solid #4caf50;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.entity-title {
+  font-size: 11px;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 4px;
+}
+
+.entity-field {
+  font-size: 9px;
+  color: #2e7d32;
+}
+
+/* Database Section */
+.database-section {
+  background: #fce4ec;
+  padding: 15px;
+  text-align: center;
+}
+
+.database-icon {
+  margin-bottom: 10px;
+}
+
+.db-symbol {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+.db-title {
+  font-size: 12px;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 5px;
+}
+
+.db-subtitle {
+  font-size: 10px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.crud-operations {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.crud-item {
+  background: #f8bbd9;
+  color: #000;
+  padding: 3px 6px;
+  border-radius: 3px;
+  font-size: 9px;
+  font-weight: bold;
+}
+
+/* External APIs Section */
+.external-apis-section {
+  position: absolute;
+  bottom: 100px;
+  left: 20px;
+  right: 20px;
+}
+
+.apis-title {
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 15px;
+  color: #000;
+}
+
+.external-apis {
+  display: flex;
+  justify-content: space-around;
+  gap: 15px;
+}
+
+.api-box {
+  background: #fff9c4;
+  border: 2px solid #fbc02d;
+  border-radius: 8px;
+  padding: 15px;
+  text-align: center;
+  flex: 1;
+  max-width: 200px;
+}
+
+.api-icon {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.api-title {
+  font-size: 12px;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 5px;
+}
+
+.api-desc {
+  font-size: 10px;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.api-feature {
+  font-size: 9px;
+  background: #f57f17;
+  color: white;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-weight: bold;
+}
+
+/* Technology Stack Section */
+.tech-stack-section {
+  position: absolute;
+  bottom: 40px;
+  left: 20px;
+  right: 20px;
+}
+
+.tech-title {
+  display: none;
+}
+
+.tech-categories {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.tech-category {
+  display: none;
+}
+
+.tech-category-title {
+  display: none;
+}
+
+.tech-items {
+  display: none;
+}
+
+.tech-item {
+  display: none;
+}
+
+.tech-icon {
+  display: none;
+}
+
+.tech-name {
+  display: none;
+}
+
+/* Features Section */
+.features-section {
+  display: none;
+}
+
+/* Footer Section */
+.footer-section {
+  position: absolute;
+  bottom: 10px;
+  left: 20px;
+  right: 20px;
+  text-align: center;
+  background: #ffffff;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.submission-info {
+  font-size: 12px;
+  font-weight: bold;
+  color: #000;
+}
+
+.university-info {
+  font-size: 12px;
+  color: #666;
+}
+
+/* Technology Labels at Bottom */
+.tech-labels {
+  position: absolute;
+  bottom: 60px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  padding: 0 20px;
+}
+
+.tech-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #000;
+}
+
+/* Print Optimization */
+@media print {
+  body {
+    background: white;
+    padding: 0;
+  }
+
+  .poster-container {
+    box-shadow: none;
+    width: 100%;
+    height: auto;
+    padding: 20px;
+  }
+}
