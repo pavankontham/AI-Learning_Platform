@@ -80,20 +80,31 @@ A comprehensive learning management system built with **Spring Boot** and **Reac
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
-   cd ai-learning-platform
+   git clone https://github.com/pavankontham/AI-Learning_Platform.git
+   cd AI-Learning_Platform
    ```
 
-2. **Configure Gemini API**
-   - Update `src/main/resources/application.properties`
-   - Set your Gemini API key: `gemini.api.key=YOUR_API_KEY`
+2. **Configure Application Properties**
+   - Copy the example configuration file:
+     ```bash
+     cp src/main/resources/application.properties.example src/main/resources/application.properties
+     ```
+   - Edit `src/main/resources/application.properties` and add your API keys:
+     - **Gemini API Key**: Get from [Google AI Studio](https://makersuite.google.com/app/apikey)
+     - **YouTube API Key**: Get from [Google Cloud Console](https://console.cloud.google.com/apis/credentials)
+     - **Codeforces API**: Get from [Codeforces Settings](https://codeforces.com/settings/api)
+     - **JWT Secret**: Use a strong random string (at least 32 characters)
 
 3. **Run the Spring Boot application**
    ```bash
    ./mvnw spring-boot:run
    ```
-   
-   The backend will start on `http://localhost:8080`
+   Or on Windows:
+   ```bash
+   mvnw.cmd spring-boot:run
+   ```
+
+   The backend will start on `http://localhost:8081/api`
 
 ### Frontend Setup
 
